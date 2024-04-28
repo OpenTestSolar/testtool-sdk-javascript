@@ -46,7 +46,7 @@ class Reporter {
   }
 
   private generateRunCaseReportName(testResult: TestResult): string {
-    const retryId: string = testResult.Test.Attrs["retry"] || "0";
+    const retryId: string = testResult.Test.Attributes["retry"] || "0";
     const testIdentifier = `${testResult.Test.Name}.${retryId}`;
     const hashedFileName = MD5(testIdentifier).toString();
     const fileName = `${hashedFileName}.json`;
