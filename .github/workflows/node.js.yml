@@ -27,7 +27,7 @@ jobs:
         cache: 'npm'
     - name: install pnpm
       run: npm install -g pnpm
-    - run: pnpm install
+    - run: pnpm install --frozen-lockfile
     - name: Type check
       run: |
         tsc --noEmit --checkJs
