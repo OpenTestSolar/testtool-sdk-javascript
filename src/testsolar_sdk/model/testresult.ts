@@ -34,13 +34,6 @@ export class TestCaseAssertError {
     this.Actual = actual;
     this.Message = message;
   }
-  toJSON(): object {
-    return {
-      Expect: this.Expect,
-      Actual: this.Actual,
-      Message: this.Message,
-    };
-  }
 }
 
 export class TestCaseRuntimeError {
@@ -50,12 +43,6 @@ export class TestCaseRuntimeError {
   constructor(summary: string, detail: string) {
     this.Summary = summary;
     this.Detail = detail;
-  }
-  toJSON(): object {
-    return {
-      Summary: this.Summary,
-      Detail: this.Detail,
-    };
   }
 }
 
@@ -68,13 +55,6 @@ export class Attachment {
     this.Name = name;
     this.Url = url;
     this.AttachmentType = type;
-  }
-  toJSON(): object {
-    return {
-      Name: this.Name,
-      Url: this.Url,
-      AttachmentType: this.AttachmentType,
-    };
   }
 }
 
@@ -101,16 +81,6 @@ export class TestCaseLog {
     this.AssertError = assertError;
     this.RuntimeError = runtimeError;
   }
-  toJSON(): object {
-    return {
-      Time: this.Time,
-      Level: this.Level,
-      Content: this.Content,
-      Attachments: this.Attachments.map((attachment) => attachment.toJSON()),
-      AssertError: this.AssertError ? this.AssertError.toJSON() : undefined,
-      RuntimeError: this.RuntimeError ? this.RuntimeError.toJSON() : undefined,
-    };
-  }
 }
 
 export class TestCaseStep {
@@ -132,15 +102,6 @@ export class TestCaseStep {
     this.Title = title;
     this.ResultType = resultType;
     this.Logs = logs;
-  }
-  toJSON(): object {
-    return {
-      StartTime: this.StartTime,
-      EndTime: this.EndTime,
-      Title: this.Title,
-      ResultType: this.ResultType,
-      Logs: this.Logs.map((log) => log.toJSON()),
-    };
   }
 }
 
@@ -166,15 +127,5 @@ export class TestResult {
     this.ResultType = resultType;
     this.Message = message;
     this.Steps = steps;
-  }
-  toJSON(): object {
-    return {
-      Test: this.Test.toJSON(),
-      StartTime: this.StartTime,
-      EndTime: this.EndTime,
-      ResultType: this.ResultType,
-      Message: this.Message,
-      Steps: this.Steps.map((step) => step.toJSON()),
-    };
   }
 }
