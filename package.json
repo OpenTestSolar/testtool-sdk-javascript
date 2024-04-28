@@ -1,0 +1,27 @@
+{
+  "name": "@tencent/testsolar_sdk",
+  "version": "0.0.10",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "build": "tsc",
+    "start": "",
+    "format": "prettier --write ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OpenTestSolar/testtool-sdk-javascript.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "class-transformer": "^0.5.1",
+    "crypto-js": "^4.2.0",
+    "fs-extra": "^11.2.0"
+  },
+  "devDependencies": {
+    "@types/crypto-js": "^4.2.2",
+    "@types/fs-extra": "^11.0.4",
+    "prettier": "^3.2.5"
+  }
+}
