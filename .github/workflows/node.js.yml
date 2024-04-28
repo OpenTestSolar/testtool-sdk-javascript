@@ -25,9 +25,11 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
+    - name: install pnpm
+      run: npm install -g pnpm
+    - run: pnpm install
     - name: Type check
       run: |
         tsc --noEmit --checkJs
-    - run: npm run build --if-present
-    - run: npm test
+    - run: pnpm run build --if-present
+    - run: pnpm test
