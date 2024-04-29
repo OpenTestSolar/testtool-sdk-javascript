@@ -26,6 +26,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
+    - name: Only install Jest
+      run: npm install --save-dev jest
     - name: Type check
       run: |
         tsc --noEmit --checkJs
