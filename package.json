@@ -7,7 +7,7 @@
     "build": "tsc",
     "start": "",
     "format": "prettier --write .",
-    "test": "jest --config=./jest.config.js --coverage"
+    "test": "jest --coverage"
   },
   "repository": {
     "type": "git",
