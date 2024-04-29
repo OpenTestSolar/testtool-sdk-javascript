@@ -3,12 +3,12 @@ import * as path from "path"
 import { MD5 } from "crypto-js";
 import { LoadResult } from "./model/load";
 import { TestResult } from "./model/testresult";
-import { dateTimeReplacer } from "./model/encoder";
+import { typedSerialize } from "./model/encoder";
 
 
 class Reporter {
-  private loadReportDir: string;
-  private runReportDir: string;
+  private readonly loadReportDir: string;
+  private readonly runReportDir: string;
 
   constructor(taskId: string, reportDir: string = "/home/testsolar") {
     if (!taskId.trim()) {
@@ -24,7 +24,7 @@ class Reporter {
 
   // 上报加载用例结果
   async reportLoadResult(loadResult: LoadResult): Promise<void> {
-    const raw: string = JSON.stringify(loadResult, dateTimeReplacer, 2);
+    const raw: string = typedSerialize(loadResult);
 
     await fs.mkdirs(this.loadReportDir);
     await fs.writeFile(`${this.loadReportDir}/result.json`, raw);
@@ -35,7 +35,7 @@ class Reporter {
 
   // 上报测试用例执行结果
   async reportTestResult(testResult: TestResult): Promise<void> {
-    const raw: string = JSON.stringify(testResult, dateTimeReplacer, 2);
+    const raw: string = typedSerialize(testResult);
 
     await fs.mkdirs(this.runReportDir);
     await fs.writeFile(

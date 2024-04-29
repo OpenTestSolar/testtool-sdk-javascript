@@ -1,13 +1,20 @@
-function formatDateTime(date: Date): string {
-    // 将 Date 对象格式化为 ISO 8601 字符串，并调整为 UTC 时间
-    return date.toISOString();
-  }
-  
-export function dateTimeReplacer(key: string, value: any): any {
-    if (value instanceof Date) {
-      // 如果值是 Date 对象，使用自定义的日期时间格式化函数
-      return formatDateTime(value);
-    }
-    // 对于其他类型，不做特殊处理，返回原始值
-    return value;
-  }
+function defaultSerializer(value: unknown): string {
+    return JSON.stringify(value);
+}
+
+function customDateSerializer(value: Date): string {
+    // 自定义日期格式，例如 YYYY-MM-DD
+    return value.toISOString()
+}
+
+export function typedSerialize<T>(data: T): string {
+    return JSON.stringify(data, (_, val) => {
+        if (val instanceof Date) {
+            // 仅针对 Date 类型进行自定义序列化
+            return customDateSerializer(val);
+        }
+        // 对于其他类型，使用默认序列化
+        return defaultSerializer(val);
+    }, 2); // 缩进 2 空格美化输出
+}
+
