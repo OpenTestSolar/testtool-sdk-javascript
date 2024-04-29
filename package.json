@@ -7,8 +7,10 @@
     "build": "tsc",
     "start": "",
     "format": "prettier --write .",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "check": "npx eslint src"
   },
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/OpenTestSolar/testtool-sdk-javascript.git"
