@@ -1,10 +1,10 @@
 {
   "name": "testsolar-oss-sdk",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "",
   "main": "",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc ./src/**/*.ts",
     "start": "",
     "format": "prettier --write .",
     "test": "jest --coverage",
