@@ -10,7 +10,7 @@
     "test": "jest --coverage",
     "check": "npx eslint src"
   },
-  "type": "commonjs",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/OpenTestSolar/testtool-sdk-javascript.git"
