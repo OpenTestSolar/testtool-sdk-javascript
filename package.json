@@ -4,7 +4,7 @@
   "description": "",
   "main": "",
   "scripts": {
-    "build": " tsc ./src/**/*.ts",
+    "build": "tsc ./src/**/*.ts",
     "start": "",
     "format": "prettier --write .",
     "test": "jest --coverage",
