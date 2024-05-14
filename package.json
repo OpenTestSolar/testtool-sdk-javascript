@@ -4,7 +4,7 @@
   "description": "",
   "main": "",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc src/testsolar_sdk/reporter.ts && tsc src/testsolar_sdk/model/*.ts",
     "start": "",
     "format": "prettier --write .",
     "test": "jest --coverage",
