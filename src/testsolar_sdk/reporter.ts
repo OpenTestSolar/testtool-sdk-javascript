@@ -7,41 +7,44 @@ import { typedSerialize } from "./model/encoder";
 
 
 class Reporter {
-  private readonly loadReportDir: string;
-  private readonly runReportDir: string;
+  private readonly reportFile: string;
 
-  constructor(taskId: string, reportDir: string = "/home/testsolar") {
+  constructor(taskId: string, reportFile: string) {
     if (!taskId.trim()) {
       throw new Error("Reporter.taskId must not be empty!");
     }
-    if (!reportDir.trim()) {
-      throw new Error("Reporter.reportDir must not be empty!");
+    if (!reportFile.trim()) {
+      throw new Error("Reporter.reportFile must not be empty!");
     }
 
-    this.loadReportDir = path.join(reportDir, 'task', taskId, 'load');
-    this.runReportDir = path.join(reportDir, 'task', taskId, 'run');
+    this.reportFile = reportFile;
+
+    // 检查并创建reportFile路径
+    const reportDir = path.dirname(reportFile);
+    if (!fs.existsSync(reportDir)) {
+      fs.mkdirsSync(reportDir);
+    }
   }
 
   // 上报加载用例结果
   async reportLoadResult(loadResult: LoadResult): Promise<void> {
     const raw: string = typedSerialize(loadResult);
 
-    await fs.mkdirs(this.loadReportDir);
-    await fs.writeFile(`${this.loadReportDir}/result.json`, raw);
+    await fs.writeFile(this.reportFile, raw);
     console.log(
-      `Final load result is saved to:\n${this.loadReportDir}/result.json \nFinal load result content:\n${raw}\n`,
+      `Final load result is saved to:\n${this.reportFile} \nFinal load result content:\n${raw}\n`,
     );
   }
+
 
   // 上报测试用例执行结果
   async reportTestResult(testResult: TestResult): Promise<void> {
     const raw: string = typedSerialize(testResult);
 
-    await fs.mkdirs(this.runReportDir);
-    await fs.writeFile(
-      `${this.runReportDir}/${this.generateRunCaseReportName(testResult)}`,
-      raw,
-    );
+    const runCaseReportName = this.generateRunCaseReportName(testResult);
+    const runReportFile = path.join(path.dirname(this.reportFile), runCaseReportName);
+
+    await fs.writeFile(runReportFile, raw);
     console.log(`Final run result content:\n${raw}\n`);
   }
 
@@ -52,7 +55,7 @@ class Reporter {
     const fileName = `${hashedFileName}.json`;
 
     console.log(
-      `Final run result is saved to:\n ${this.runReportDir}/${fileName}\n`,
+      `Final run result is saved to:\n ${path.dirname(this.reportFile)}/${fileName}\n`,
     );
 
     return fileName;
