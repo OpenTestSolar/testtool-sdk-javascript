@@ -7,32 +7,35 @@ import { typedSerialize } from "./model/encoder";
 
 
 class Reporter {
-  private readonly reportFile: string;
+  private readonly reportPath: string;
 
-  constructor(taskId: string, reportFile: string) {
+  constructor(taskId: string, reportPath: string) {
     if (!taskId.trim()) {
       throw new Error("Reporter.taskId must not be empty!");
     }
-    if (!reportFile.trim()) {
-      throw new Error("Reporter.reportFile must not be empty!");
+
+    this.reportPath = reportPath;
+    if (reportPath.endsWith(".json")){
+      const reportDir = path.dirname(reportPath);
+      if (!fs.existsSync(reportDir)) {
+        fs.mkdirsSync(reportDir);
+      }
+    } else {
+      if (!fs.existsSync(reportPath)) {
+        fs.mkdirsSync(reportPath);
+        }
     }
-
-    this.reportFile = reportFile;
-
     // 检查并创建reportFile路径
-    const reportDir = path.dirname(reportFile);
-    if (!fs.existsSync(reportDir)) {
-      fs.mkdirsSync(reportDir);
-    }
+
   }
 
   // 上报加载用例结果
   async reportLoadResult(loadResult: LoadResult): Promise<void> {
     const raw: string = typedSerialize(loadResult);
 
-    await fs.writeFile(this.reportFile, raw);
+    await fs.writeFile(this.reportPath, raw);
     console.log(
-      `Final load result is saved to:\n${this.reportFile} \nFinal load result content:\n${raw}\n`,
+      `Final load result is saved to:\n${this.reportPath} \nFinal load result content:\n${raw}\n`,
     );
   }
 
@@ -42,7 +45,7 @@ class Reporter {
     const raw: string = typedSerialize(testResult);
 
     const runCaseReportName = this.generateRunCaseReportName(testResult);
-    const runReportFile = path.join(path.dirname(this.reportFile), runCaseReportName);
+    const runReportFile = path.join(this.reportPath, runCaseReportName);
 
     await fs.writeFile(runReportFile, raw);
     console.log(`Final run result content:\n${raw}\n`);
@@ -55,7 +58,7 @@ class Reporter {
     const fileName = `${hashedFileName}.json`;
 
     console.log(
-      `Final run result is saved to:\n ${path.dirname(this.reportFile)}/${fileName}\n`,
+      `Final run result is saved to:\n ${this.reportPath}/${fileName}\n`,
     );
 
     return fileName;
