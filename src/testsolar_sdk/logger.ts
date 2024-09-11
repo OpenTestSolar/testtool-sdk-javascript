@@ -1,12 +1,12 @@
 import log from 'loglevel';
-import prefix from 'loglevel-plugin-prefix';
+import { apply as applyPrefix, reg as registerPrefix } from 'loglevel-plugin-prefix';
 
 // 配置 loglevel
 log.setLevel(log.levels.DEBUG);
 
 // 配置 loglevel-plugin-prefix
-prefix.reg(log);
-prefix.apply(log, {
+registerPrefix(log);
+applyPrefix(log, {
   format(level, name, timestamp) {
     // 获取调用日志的文件名和行号
     const stack = new Error().stack;
