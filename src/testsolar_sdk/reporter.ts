@@ -4,6 +4,7 @@ import { MD5 } from "crypto-js";
 import { LoadResult } from "./model/load";
 import { TestResult } from "./model/testresult";
 import { typedSerialize } from "./model/encoder";
+import log from './logger';
 
 
 class Reporter {
@@ -34,7 +35,7 @@ class Reporter {
     const raw: string = typedSerialize(loadResult);
 
     await fs.writeFile(this.reportPath, raw);
-    console.log(
+    log.info(
       `Final load result is saved to:\n${this.reportPath} \nFinal load result content:\n${raw}\n`,
     );
   }
@@ -48,7 +49,7 @@ class Reporter {
     const runReportFile = path.join(this.reportPath, runCaseReportName);
 
     await fs.writeFile(runReportFile, raw);
-    console.log(`Final run result content:\n${raw}\n`);
+    log.info(`Final run result content:\n${raw}\n`);
   }
 
   private generateRunCaseReportName(testResult: TestResult): string {
@@ -57,7 +58,7 @@ class Reporter {
     const hashedFileName = MD5(testIdentifier).toString();
     const fileName = `${hashedFileName}.json`;
 
-    console.log(
+    log.info(
       `Final run result is saved to:\n ${this.reportPath}/${fileName}\n`,
     );
 
