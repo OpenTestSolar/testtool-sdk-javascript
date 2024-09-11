@@ -1,6 +1,6 @@
 {
   "name": "testsolar-oss-sdk",
-  "version": "0.0.19",
+  "version": "0.0.18",
   "description": "",
   "main": "",
   "scripts": {
@@ -20,9 +20,7 @@
   "dependencies": {
     "class-transformer": "^0.5.1",
     "crypto-js": "^4.2.0",
-    "fs-extra": "^11.2.0",
-    "loglevel": "^1.9.2",
-    "loglevel-plugin-prefix": "^0.8.4"
+    "fs-extra": "^11.2.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.1.1",
