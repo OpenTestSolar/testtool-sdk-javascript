@@ -22,3 +22,5 @@ applyPrefix(log, {
 });
 
 export default log;
+
+
